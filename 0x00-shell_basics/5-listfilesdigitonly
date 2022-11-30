@@ -1,10 +1,2 @@
 #!/bin/bash 
-drwxr-xr-x 2 root root 167 Nov 30 01:07 .
-drwxr-xr-x 4 root root  60 Nov 30 00:16 ..
--rwxr-xr-x 1 root root  16 Nov 30 00:16 0-current_working_directory
--rwxr-xr-x 1 root root  15 Nov 30 00:19 1-listit
--rwxr--r-- 1 root root  17 Nov 30 00:19 2-bring_me_home
--rwxr--r-- 1 root root  18 Nov 30 00:37 3-listfiles
--rwxr--r-- 1 root root  19 Nov 30 01:02 4-listmorefiles
--rwxr--r-- 1 root root  24 Nov 30 01:07 5-listfilesdigitonly
--rw-r--r-- 1 root root  60 Nov 30 00:16 README.md
+ls -al
