@@ -1,2 +1,2 @@
 #!/bin/bash
-pwd
+echo "/c/Users/user/Documents/Alx-git/alx-system_engineering-devops/0x00-shell_basics"
