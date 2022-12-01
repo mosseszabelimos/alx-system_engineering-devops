@@ -1,2 +1,6 @@
 #!/bin/bash
+<<<<<<< HEAD
 file -m school.mgc *
+=======
+file school.mgc
+>>>>>>> task 19
