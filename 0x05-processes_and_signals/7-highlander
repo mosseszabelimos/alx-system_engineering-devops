@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# script that displays To infinity and beyond indefinitely.
+# shellcheck disable=SC2009
+
+function no_ctrlc()
+{
+    echo "I am invincible!!!"
+}
+
+
+trap no_ctrlc SIGTERM
+
+while :
+do
+    echo "To infinity and beyond"
+    sleep 2
+done
