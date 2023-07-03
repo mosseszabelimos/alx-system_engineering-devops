@@ -1,34 +1,15 @@
 #!/usr/bin/env bash
-# configure web-02 to be identical to web-01
-# The name of the custom HTTP header must be X-Served-By
-# The value of the custom HTTP header must be the hostname of the server Nginx is running on
-#sudo sed -i 's/server_name _;.*/server_name _;\n\tadd_header X-Served-By \$hostname;/' /etc/nginx/sites-enabled/default 
-sudo apt-get -y update
-sudo apt-get -y install nginx
+# shellcheck disable=SC2154
+#configures a new Ubuntu machine nginx
+sudo apt-get update
+sudo apt-get install nginx -y
 sudo ufw allow 'Nginx HTTP'
-sudo mkdir -p /var/www/html /var/www/error
-sudo chmod -R 755 /var/www
-echo 'Hello World!' > /var/www/html/index.html
-echo "Ceci n'est pas une page" > /var/www/html/404.html
-server_config=\
-"server {
-	listen 80 default_server;
-	listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
-	server_name _;
-	add_header X-Served-By \$hostname;
-	location / {
-		try_files \$uri \$uri/ =404;
-	}
-	if (\$request_filename ~ redirect_me){
-		rewrite ^ https://youtube.com permanent;
-	}
-	error_page 404 /404.html;
-	location = /404.html {
-		internal;
-	}
-}"
-
-echo "$server_config" > /etc/nginx/sites-enabled/default
-sudo service nginx restart
+echo "Holberton School" | sudo tee /var/www/html/index.nginx-debian.html
+new_string="listen 80 default_server;\\n\\tlocation \/redirect_me {\\n\\t\\treturn 301 https:\/\/www.youtube.com\/;\\n\\t}"
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
+echo "Ceci n'est pas une page" | sudo tee /usr/share/nginx/html/404.html
+new_string="listen 80 default_server;\\nerror_page 404 \/404.html;\\n\\tlocation = \/404.html {\\n\\t\\troot \/usr\/share\/nginx\/html;\\n\\t\\tinternal;\\n\\t}"
+sudo sed -i "s/listen 80 default_server;/$new_string/" /etc/nginx/sites-enabled/default
+new_string2="http {\\n\\tadd_header X-Served-By \"$HOSTNAME\";"
+sudo sed -i "s/http {/$new_string2/" /etc/nginx/nginx.conf
+sudo service nginx start
